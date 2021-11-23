@@ -2,14 +2,16 @@
 
 # aqua - CLI Version Manager
 
-5min LT
+![logo](https://github.com/suzuki-shunsuke/aqua/raw/main/logo/aqua_without_text.svg)
+
 
 <!-- block-start: grid -->
+Shunsuke Suzuki
 <!-- account: twitter, szkdash -->
 <!-- account: github, suzuki-shunsuke -->
 <!-- block-end -->
 
-2021-11-13 Shunsuke Suzuki
+2021-11-13 
 
 ---
 
