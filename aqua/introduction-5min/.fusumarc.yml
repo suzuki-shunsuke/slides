@@ -9,7 +9,7 @@ slide:
   ui:
     sidebar: true
     vertical: false
-    pagination: # bullets | progressbar | fraction
+    pagination: fraction # bullets | progressbar | fraction
     effect: # fade | cube | flip
   code:
     # https://prismjs.com/
