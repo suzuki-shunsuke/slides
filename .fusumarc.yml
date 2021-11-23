@@ -1,0 +1,19 @@
+meta:
+  url:
+  title: aqua - CLI Version Manager
+  description:
+  siteName:
+  sns: ['twitter']
+slide:
+  loop: false
+  ui:
+    sidebar: true
+    vertical: false
+    pagination: # bullets | progressbar | fraction
+    effect: # fade | cube | flip
+  code:
+    # https://prismjs.com/
+    plugins: []
+    theme: default # coy | dark | funky | okaidia | solarizedlight | tomorrow | twilight
+extends:
+  css: style.css
