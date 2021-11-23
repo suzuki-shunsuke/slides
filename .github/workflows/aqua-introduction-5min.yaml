@@ -1,4 +1,4 @@
-name: 'Deploy aqua-introduction-5min'
+name: 'Deploy aqua/introduction-5min'
 
 on:
   push:
@@ -11,4 +11,4 @@ jobs:
     - uses: actions/checkout@v2
     - uses: ./.github/actions/deploy
       with:
-        working-directory: aqua-introduction-5min
+        working-directory: aqua/introduction-5min
