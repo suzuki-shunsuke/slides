@@ -17,8 +17,7 @@ runs:
     shell: bash
     working-directory: ${{ inputs.working-directory }}
   - uses: peaceiris/actions-gh-pages@v3
-    working-directory: ${{ inputs.working-directory }}
     with:
       github_token: ${{ secrets.GITHUB_TOKEN }}
-      publish_dir: ./dist
+      publish_dir: ./${{ inputs.working-directory }}/dist
       destination_dir: ${{ inputs.working-directory }}
