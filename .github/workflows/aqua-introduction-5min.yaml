@@ -9,6 +9,6 @@ jobs:
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v2
-    - uses: ./.github/actions/deploy.yaml
+    - uses: ./.github/actions/deploy
       with:
         working-directory: aqua/introduction-5min
