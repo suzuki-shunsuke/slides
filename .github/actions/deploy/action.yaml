@@ -4,6 +4,10 @@ inputs:
   working-directory:
     description: 'Working Directory'
     required: true
+  github_token:
+    description: 'GitHub Access Token'
+    required: false
+    default: ${{ github.token }}
 runs:
   using: composite
   steps:
@@ -18,6 +22,6 @@ runs:
     working-directory: ${{ inputs.working-directory }}
   - uses: peaceiris/actions-gh-pages@v3
     with:
-      github_token: ${{ secrets.GITHUB_TOKEN }}
+      github_token: ${{ inputs.github_token }}
       publish_dir: ./${{ inputs.working-directory }}/dist
       destination_dir: ${{ inputs.working-directory }}
