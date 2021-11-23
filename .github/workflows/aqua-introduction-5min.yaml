@@ -1,9 +1,12 @@
 name: 'Deploy aqua/introduction-5min'
-
 on:
   push:
     branches:
     - main
+    paths:
+    - aqua/introduction-5min/**
+    - .github/workflows/aqua-introduction-5min.yaml
+    - .github/actions/deploy/**
 jobs:
   deploy:
     runs-on: ubuntu-latest
