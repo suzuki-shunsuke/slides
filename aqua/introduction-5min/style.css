@@ -32,6 +32,9 @@
 .section-title {
 }
 
+/* https://stackoverflow.com/a/14747656 
+ * Adjust image size.
+*/
 img[alt=logo] {
   width: 200px;
 }
