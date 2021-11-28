@@ -2,7 +2,7 @@
 
 # aqua - CLI Version Manager
 
-![logo](https://github.com/suzuki-shunsuke/aqua/raw/main/logo/aqua_without_text.svg)
+![logo](https://github.com/aquaproj/aqua/raw/main/logo/aqua_without_text.svg)
 
 
 <!-- block-start: grid -->
@@ -33,10 +33,10 @@ The introduction of the tool `aqua`
 ## What's aqua?
 
 * CLI tool to install CLI tool with YAML configuration
-* OSS: https://github.com/suzuki-shunsuke/aqua
+* OSS: https://github.com/aquaproj/aqua
 * Written in Go
 
-![logo](https://github.com/suzuki-shunsuke/aqua/raw/main/logo/aqua_without_text.svg)
+![logo](https://github.com/aquaproj/aqua/raw/main/logo/aqua_without_text.svg)
 
 ---
 
@@ -57,9 +57,9 @@ The introduction of the tool `aqua`
 ```console
 # For Linux
 # $ curl -sSfL \
-#   https://raw.githubusercontent.com/suzuki-shunsuke/aqua-installer/v0.2.0/aqua-installer |
+#   https://raw.githubusercontent.com/aquaproj/aqua-installer/v0.3.0/aqua-installer |
 #   bash
-$ brew install suzuki-shunsuke/aqua/aqua
+$ brew install aquaproj/aqua/aqua
 
 $ export PATH=~/.aqua/bin:$PATH
 $ vi aqua.yaml
@@ -71,7 +71,7 @@ aqua.yaml
 ```yaml
 registries:
 - type: standard
-  ref: v0.10.8 # renovate: depName=suzuki-shunsuke/aqua-registry
+  ref: v0.10.10 # renovate: depName=aquaproj/aqua-registry
 packages:
 - name: direnv/direnv@v2.28.0
 - name: junegunn/fzf@0.27.2
@@ -85,9 +85,9 @@ packages:
 
 * GitHub Actions
   * [int128/aqua-action](https://github.com/int128/aqua-action)
-  * [suzuki-shunsuke/aqua-installer](https://github.com/suzuki-shunsuke/aqua-installer)
+  * [aquaproj/aqua-installer](https://github.com/aquaproj/aqua-installer)
 * CircleCI Orb
-  * [suzuki-shunsuke/aqua](https://circleci.com/developer/orbs/orb/suzuki-shunsuke/aqua)
+  * [aquaproj/aqua](https://circleci.com/developer/orbs/orb/aquaproj/aqua)
 
 ---
 
@@ -120,7 +120,7 @@ aqua.yaml
 ```yaml
 registries:
 - type: standard
-  ref: v0.10.8 # renovate: depName=suzuki-shunsuke/aqua-registry
+  ref: v0.10.10 # renovate: depName=aquaproj/aqua-registry
 
 packages:
 - name: direnv/direnv@v2.28.0
@@ -154,13 +154,13 @@ INFO[0000] download and unarchive the package            aqua_version=0.7.16 pac
 
 You can update package versions with [Renovate](https://docs.renovatebot.com/).
 
-* [suzuki-shunsuke/aqua-renovate-config](https://github.com/suzuki-shunsuke/aqua-renovate-config)
+* [aquaproj/aqua-renovate-config](https://github.com/aquaproj/aqua-renovate-config)
 
 ```json
 {
   "extends": [
-    "github>suzuki-shunsuke/aqua-renovate-config",
-    "github>suzuki-shunsuke/aqua-renovate-config:file(aqua/.*\\.ya?ml)"
+    "github>aquaproj/aqua-renovate-config",
+    "github>aquaproj/aqua-renovate-config:file(aqua/.*\\.ya?ml)"
   ]
 }
 ```
@@ -172,13 +172,13 @@ You can update package versions with [Renovate](https://docs.renovatebot.com/).
 ## Additional Feature
 
 * Registry
-* [Standard Registry](https://github.com/suzuki-shunsuke/aqua-registry): Let's add your favorite tools
+* [Standard Registry](https://github.com/aquaproj/aqua-registry): Let's add your favorite tools
 * Save installation time and disk by sharing tools across projects
 * Fuzzy Search of packages by command `aqua g`
 * Read configuration files recursively
 * Split `packages` configuration to multiple files
 
-Please see [the document](https://github.com/suzuki-shunsuke/aqua/blob/main/README.md).
+Please see [the document](https://github.com/aquaproj/aqua/blob/main/README.md).
 
 ---
 
