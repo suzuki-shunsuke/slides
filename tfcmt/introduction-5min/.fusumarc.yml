@@ -1,0 +1,19 @@
+meta:
+  url: https://techblog.szksh.cloud/slides/tfcmt/introduction-5min
+  title: tfcmt - Post terraform plan & apply result to Pull Request
+  description:
+  siteName:
+  sns: ['twitter']
+slide:
+  loop: false
+  ui:
+    sidebar: true
+    vertical: false
+    pagination: fraction # bullets | progressbar | fraction
+    effect: # fade | cube | flip
+  code:
+    # https://prismjs.com/
+    plugins: []
+    theme: default # coy | dark | funky | okaidia | solarizedlight | tomorrow | twilight
+extends:
+  css: style.css

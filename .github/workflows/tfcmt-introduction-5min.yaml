@@ -1,0 +1,17 @@
+name: 'Deploy tfcmt/introduction-5min'
+on:
+  push:
+    branches:
+    - main
+    paths:
+    - tfcmt/introduction-5min/**
+    - .github/workflows/tfcmt-introduction-5min.yaml
+    - .github/actions/deploy/**
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v2
+    - uses: ./.github/actions/deploy
+      with:
+        working-directory: tfcmt/introduction-5min
