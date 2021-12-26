@@ -52,6 +52,12 @@ $ tfcmt apply -- terraform apply [terraform apply's arguments]
 
 ---
 
+<!-- section-title: Apply -->
+
+![image](https://user-images.githubusercontent.com/13323303/147404674-a9df6aca-8d89-49c6-b562-9a82a34cf061.png)
+
+---
+
 <!-- section-title: Set Colored Labels -->
 
 ## Set Colored Labels
