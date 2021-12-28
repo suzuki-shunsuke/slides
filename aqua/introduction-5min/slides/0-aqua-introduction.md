@@ -84,7 +84,6 @@ packages:
 ## GitHub Actions and CircleCI Orb
 
 * GitHub Actions
-  * [int128/aqua-action](https://github.com/int128/aqua-action)
   * [aquaproj/aqua-installer](https://github.com/aquaproj/aqua-installer)
 * CircleCI Orb
   * [aquaproj/aqua](https://circleci.com/developer/orbs/orb/aquaproj/aqua)
