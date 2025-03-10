@@ -16,10 +16,9 @@ jobs:
         with:
           persist-credentials: false
       - run: npx @marp-team/marp-cli@latest -o public -I marp
-      - uses: suzuki-shunsuke/gh-pages-action@6229a3f8d89389da5c234aab3b37ba51a7fee3f6 # v0.0.1
+      - uses: suzuki-shunsuke/gh-pages-action@main
         if: github.event_name == 'push'
         with:
           app_id: ${{ secrets.APP_ID }}
           app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
           publish_dir: public
-          destination_dir: .
