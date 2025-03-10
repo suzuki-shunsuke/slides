@@ -21,3 +21,5 @@ jobs:
         with:
           app_id: ${{ secrets.APP_ID }}
           app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
+          publish_dir: public
+          destination_dir: .
