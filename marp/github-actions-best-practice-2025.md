@@ -64,6 +64,7 @@ GitHub Actions, CLI built with Go
 
 <!--
 GitHub Actions やコマンドラインツールなど、趣味で様々な OSS の開発をしています。
+本日は色々なツールを紹介するのですが、それらの多くは実は自分が作ったものになります。
 -->
 
 ---
@@ -73,9 +74,15 @@ GitHub Actions やコマンドラインツールなど、趣味で様々な OSS 
 GitHub Actions Best Practice
 
 - Security
+  - General practice
+  - Advanced practice
+- Develper Experience
+- Performance Visualization
 
 <!--
 本日は GitHub Actions のベストプラクティス、特にセキュリティ周りの話をしたいと思います。
+まず一般的なセキュリティのプラクティスの話をした後に、自分の経験に基づく応用的な話をします。
+その後、セキュリティ以外の DX 周りの話も若干します。
 -->
 
 ---
@@ -357,14 +364,14 @@ action の最新バージョンが幾つかなんて一々覚えてないです�
 
 # pinact-action
 
-[pinact-action](https://github.com/suzuki-shunsuke/pinact-action)
-
 ```yaml
 - uses: suzuki-shunsuke/pinact-action@56efd2c1e82a807c939fe31dfbeb12fb73258566 # v0.1.1
   with:
     app_id: ${{secrets.APP_ID}}
     app_private_key: ${{secrets.APP_PRIVATE_KEY}}
 ```
+
+![width:700px](https://storage.googleapis.com/zenn-user-upload/ad2f4622409d-20250310.png)
 
 <!--
 pinact-action という action を使うと CI で自動でバージョンを固定出来ます。
@@ -938,7 +945,7 @@ github-comment というツールを使うと、コマンドが失敗した際�
 
 ---
 
-![](https://user-images.githubusercontent.com/13323303/151699230-1c109a57-47d1-4c3b-9c3a-4dfec786a043.png)
+![](https://storage.googleapis.com/zenn-user-upload/0800778bb140-20250310.png)
 
 <!--
 また CI が失敗したときにどうすればいいのかガイドをコメントして開発者が困らないようにすることも出来ます。
