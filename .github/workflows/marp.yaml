@@ -1,0 +1,23 @@
+name: marp
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+    paths:
+      - marp/**
+      - .github/workflows/marp.yaml
+jobs:
+  validate:
+    timeout-minutes: 20
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - run: npx @marp-team/marp-cli@latest -o publish -I marp
+      - uses: suzuki-shunsuke/gh-pages-action@v0.0.1
+        if: github.event_name == 'push'
+        with:
+          app_id: ${{ secrets.APP_ID }}
+          app_private_key: ${{ secrets.APP_PRIVATE_KEY }}
