@@ -64,7 +64,7 @@ GitHub Actions, CLI built with Go
 
 <!--
 GitHub Actions やコマンドラインツールなど、趣味で様々な OSS の開発をしています。
-本日は色々なツールを紹介するのですが、それらの多くは実は自分が作ったものになります。
+本日の登壇の中でも幾つか紹介させていただきます。
 -->
 
 ---
@@ -74,9 +74,9 @@ GitHub Actions やコマンドラインツールなど、趣味で様々な OSS 
 GitHub Actions Best Practice
 
 - Security
-  - General practice
+  - Basic practice
   - Advanced practice
-- Develper Experience
+- Developer Experience
 - Performance Visualization
 
 <!--
@@ -87,9 +87,11 @@ GitHub Actions Best Practice
 
 ---
 
-# Organization Settings
+# Basic Practice
 
-The setting of GitHub Actions token (`${{github.token}}`):
+---
+
+# Organization Settings of GitHub Actions Token
 
 - Disable `Allow GitHub Actions to create and approve pull requests`
 - ✅ `Workflow permissions` > `Read repository contents and packages permissions`
@@ -136,16 +138,14 @@ PR を必須にしたり、 code owner のレビューを必須にしたり、
 
 # Minimize permissions of GitHub Actions token
 
-:o:
-
-```yaml
-permissions: {}
-```
-
 ```yaml
 permissions:
   contents: read # To checkout the private repository
   pull-requests: write # To post comments
+```
+
+```yaml
+permissions: {} # No Permission
 ```
 
 <!--
@@ -230,10 +230,9 @@ actions/checkout の persist-credentials を false にしましょう。
 
 # What’s persist-credentials?
 
-- If true, the auth token is persisted in the local git config
-  - 😱 Any subsequent steps can access the token
-  - 😱 persisit-credentials is true by default
-    - [This is a known issue](https://github.com/actions/checkout/issues/485)
+If true, the auth token is persisted in the local git config
+😱 Any subsequent steps can access the token
+😱 persisit-credentials is true by default ([issue](https://github.com/actions/checkout/issues/485))
 
 <!--
 persist-credentials が true だとリポジトリの checkout に使われる access token や SSH key が Git の設定に永続化されます。
@@ -245,9 +244,6 @@ persist-credentials が true だとリポジトリの checkout に使われる a
 ---
 
 # Auto fix by disable-checkout-persist-credentials
-
-- It's bothersome to fix all `actions/checkout` by hand
-- Auto fix by [disable-checkout-persist-credentials](https://github.com/suzuki-shunsuke/disable-checkout-persist-credentials)
 
 ```console
 $ disable-checkout-persist-credentials
@@ -267,8 +263,8 @@ disable-checkout-persist-credentials というツールを使うと workflow の
 
 # How to push or pull commits without persist-credentials
 
-- pull, push: `gh auth setup-git`
-- push: Use GitHub API instead of Git
+- Pull, Push: `gh auth setup-git`
+- Push Only: Use GitHub API instead of Git
 
 <!--
 persit-credentials を false にした状態で `git pull` や push をしたい場合、 `gh auth setup-git` を使う方法と、 GitHub API を使う方法の 2 つ方法があります。
@@ -298,12 +294,10 @@ gh auth setup-git を実行しておくと環境変数で access token を渡す
 
 ---
 
-# Push commits by GitHub API instead of Git
+# Create and Push commits by GitHub API
 
-- [ghcp](https://github.com/int128/ghcp)
-- [commit-action](https://github.com/suzuki-shunsuke/commit-action)
-
-:thumbsup: Using GitHub App or GitHub Actions token, you can create **verified** commits without GPG keys
+[ghcp](https://github.com/int128/ghcp) and [commit-action](https://github.com/suzuki-shunsuke/commit-action) allow you to create and push commits by GitHub API.
+:thumbsup: Using GitHub App token, you can create **verified** commits without GPG keys
 
 <!--
 ghcp や commit-action というツールを使って GitHub API で commit を生成・ push することが出来ます。
@@ -383,7 +377,7 @@ pinact-action という action を使うと CI で自動でバージョンを固
 
 - [GitHub Actions の timeout-minutes の linter 及び一括設定ツール](https://zenn.dev/shunsuke_suzuki/articles/github-actions-timeout-minutes)
 - [GitHub Actions の実行履歴に基づいて自動で timeout-minutes を設定](https://zenn.dev/shunsuke_suzuki/articles/ghatm-auto-timeout-minutes)
-- :warning: By default, the timeout-minutes is `360`
+- :warning: The default timeout-minutes is too long (360 minutes)
 
 ```yaml
 jobs:
@@ -398,9 +392,7 @@ timeout-minutes は job のタイムアウトで、デフォルトで 360 分で
 
 ---
 
-# Set timeout-minutes by ghatm
-
-[ghatm](https://github.com/suzuki-shunsuke/ghatm)
+# [ghatm](https://github.com/suzuki-shunsuke/ghatm)
 
 ```sh
 ghatm set [-auto]
@@ -418,18 +410,21 @@ ghatm というツールを使うと workflow の修正を自動化出来ます�
 
 ---
 
-# multi-gitter
+# [multi-gitter](https://github.com/lindell/multi-gitter)
 
-[multi-gitter](https://github.com/lindell/multi-gitter) - Update multiple repositories in with one command
+Fix multiple repositories using tools like pinact, ghatm, and disable-checkout-persist-credentials with one command 
 
-- pinact
-- ghatm
-- disable-checkout-persist-credentials
+```sh
+multi-gitter run ./set.sh \
+  --config config.yaml \
+  -O "aquaproj" \
+  -t "ci: disable actions/checkout's persist-credentials using disable-checkout-persist-credentials" \
+  -b "https://github.com/suzuki-shunsuke/batch-bulk-disable-checkout-persist-credentials/issues/1" \
+  -B ci-disable-checkout-persist-credentials-1
+```
 
 <!--
-pinact や ghatm, disable-checkout-persist-credentials というツールを使うと workflow の修正を自動化出来ますが、
-GitHub Organization の全リポジトリを修正したいとなると、手作業でツールを実行して PR を作ってマージするのは大変です。
-そこで multi-gitter というツールを使うと全リポジトリにまとめてツールを実行して PR 作成してマージすることが出来ます。
+multi-gitter というツールを使うと、 pinact や ghatm, disable-checkout-persist-credentials というツールを GitHub Organizatino の全リポジトリにまとめて実行して PR 作成しマージして修正する事ができます。
 -->
 
 ---
@@ -442,28 +437,35 @@ Run these linters in CI to ensure that workflows conform to policies
 - [lintnet](https://lintnet.github.io/): General purpose Linter
 
 <!--
-ghalint や lintnet という linter を使ってここまで紹介した practice が守られているかチェックすることが出来ます。
-CI でこれらのツールを実行することで practice を強制することが出来ます。
+ghalint や lintnet という linter を使ってここまで紹介した best practice が守られているかチェックすることが出来ます。
+CI でこれらのツールを実行することで best practice を強制することが出来ます。
 -->
 
 ---
 
-# actionlint
+# [actionlint](https://github.com/rhysd/actionlint)
 
-The main scope of ghalint and actionilint is different:
+ghalint and actionlint is different:
 
-- ghalint: security best practices
-- actionlint: syntax check
-  - shellcheck integration
+- ghalint: Security Best Practices
+- actionlint: Syntax Check
+  - [shellcheck](https://github.com/koalaman/shellcheck) integration
+  - [reviewdog](https://github.com/reviewdog/reviewdog) integration
 
 <!--
 GitHub Actions の Linter といえば actionlint も便利です。
-actionlint と ghalint は主なスコープが違っています。
-ghalint は syntax に問題がないことは前提になっていて、主に security 的なベストプラクティスのチェックに焦点を当てています。
+ghalint が主に security 的なベストプラクティスのチェックに焦点を当てているのに対し、
 actionlint は主に syntax check に焦点を当てています。
-なので併用できます。
-actionlint は run step に対して shellcheck を実行できるので、シェルスクリプトの潜在的なバグを見つけることが出来ます。
-また reviewdog と連携して 分かりやすくエラーをレポートすることが出来ます。
+actionlint は shellcheck を実行してシェルスクリプトの潜在的なバグを見つけることが出来ます。
+また reviewdog と連携して 分かりやすくエラーをレポート出来ます。
+-->
+
+---
+
+# Advanced Practice
+
+<!--
+ここからより応用的な話をします。
 -->
 
 ---
@@ -477,7 +479,7 @@ To merge pull requests,
   - All GitHub Actions jobs should succeed or be skipped
 
 <!--
-次に、 workflow や job を如何に構造化するかお話します。
+workflow や job を如何に構造化するかお話します。
 理想的には、全ての変更は CI でテストされるべきであり、全てのテストがパスするべきです。
 つまり、全ての job が pass するべきです。
 -->
@@ -504,19 +506,17 @@ job を追加・リネーム・削除するたびに Branch Rulesets の修正�
 
 <!--
 そこで、まず `pull_request` workflow をなるべくひとつにまとめましょう。
-workflow を分けると、 workflow を追加したりするたびに Required Checks を更新する必要が出て面倒です。
+workflow を分けると、 workflow を追加したりするたびに Required Checks を更新する必要が出てきてしまいます。
 -->
 
 ---
 
-# :x: Don't share a required check between multiple workflows
+# :x: Don't share a required check across multiple workflows
 
 Pull Requests can be merged before some workflows complete
 
-- Workflow A: build -> status-check
-- Workflow B: test -> status-check
-
-Required Check: status-check
+Workflow A: build -> status-check ✅ Complete
+Workflow B: test 🔄 Running (-> status-check (not start))
 
 <!--
 複数の workflow で required check を共有するのはやめましょう。
@@ -527,7 +527,7 @@ auto-merge が有効になっていると B を待たずに PR がマージさ�
 
 ---
 
-# Use dorny/paths-filter instead of Workflow Path-filter
+# Use [dorny/paths-filter](https://github.com/dorny/paths-filter) instead of Workflow Path-filter
 
 - If workflow Path-filter is used, you can't add jobs of the workflow to `Required Checks`
 - You can configure path filters per job
@@ -542,7 +542,7 @@ Workflow の Path filter を使うと、その Workflow の job は実行され�
 
 # Add a Required Check per `pull_request` workflow
 
-![](https://storage.googleapis.com/zenn-user-upload/c320881dc962-20250309.png)
+![](https://storage.googleapis.com/zenn-user-upload/6ca2d2371192-20250311.png)
 
 <!--
 workflow ごとに Required Check を 1 つだけ追加しましょう。
@@ -555,7 +555,7 @@ workflow ごとに Required Check を 1 つだけ追加しましょう。
 The job `status-check` must pass if all jobs pass.
 How?
 
-![](https://storage.googleapis.com/zenn-user-upload/c320881dc962-20250309.png)
+![](https://storage.googleapis.com/zenn-user-upload/6ca2d2371192-20250311.png)
 
 <!--
 この場合、 status-check という job は他の全ての job が成功したら成功し、そうでなければ失敗しなければなりません。
@@ -643,7 +643,7 @@ jobs:
 
 ---
 
-1. Add `status-check` workflow
+1. Add `status-check` job to `pull_request` workflow
 
 ```yaml
 name: test
@@ -678,7 +678,7 @@ jobs:
 
 # Prevent self approval
 
-- [self approve を防ぐ](https://zenn.dev/shunsuke_suzuki/articles/deny-self-approve)
+[self approve を防ぐ](https://zenn.dev/shunsuke_suzuki/articles/deny-self-approve)
 
 <!--
 PR をレビューなしでマージするのを防ぎましょう。
@@ -746,6 +746,14 @@ deny-self-approve-action という action を使って validation すること�
 
 ---
 
+# Developer Experience
+
+<!--
+ここからセキュリティ以外の話をします。
+-->
+
+---
+
 # Auto fix
 
 - Fixing code of pull requests automatically by CI increases developer experience
@@ -753,7 +761,6 @@ deny-self-approve-action という action を使って validation すること�
 - [ghcp を使って GitHub API で commit や branch を生成する](https://zenn.dev/shunsuke_suzuki/articles/ghcp-create-commit-github-api)
 
 <!--
-ここから、セキュリティ以外の話もします。
 CI によってコードを自動で修正すると便利です。
 その際、先述の通り ghcp や commit-action を使うと簡単に署名付きの commit を生成できます。
 -->
@@ -775,7 +782,7 @@ pull_request_target を使うとできるようになりますが、悪意のあ
 
 ---
 
-# autofix.ci
+# [autofix.ci](https://autofix.ci)
 
 ![bg left:40% width:400px](https://autofix.ci/logo/logo.png)
 
@@ -820,9 +827,9 @@ workflow でコードを修正したうえで最後に専用の action を実行
 
 ---
 
-# commit-action
+# [commit-action](https://github.com/suzuki-shunsuke/commit-action)
 
-- Create commits by GitHub API
+Create commits by GitHub API
 
 ```yaml
 name: Fix
@@ -861,7 +868,7 @@ autofix.ci のように job の最後に commit-action を実行するだけで�
 
 <!--
 次に CI のパフォーマンスの可視化の話です。
-CI のパフォーマンスを行うにはまず可視化しないといけません。
+パフォーマンスの改善を行うにはまず可視化しないといけません。
 GitHub Actions のモニタリングには GitHub Actions Usage Metrics や Performance Metrics が使えます。 
 -->
 
@@ -898,7 +905,7 @@ GitHub Actions Usage Metrics や Performance Metrics は特別なセットアッ
 
 ---
 
-# CIAnalyzer
+# [CIAnalyzer](https://github.com/Kesin11/CIAnalyzer)
 
 ![bg left:50% width:500px](https://user-images.githubusercontent.com/1324862/82752752-3d5bcd00-9dfb-11ea-9cb3-a32e81c5f3b9.png)
 
@@ -945,6 +952,8 @@ github-comment というツールを使うと、コマンドが失敗した際�
 
 ---
 
+# Describe how to handle the error
+
 ![](https://storage.googleapis.com/zenn-user-upload/0800778bb140-20250310.png)
 
 <!--
@@ -983,11 +992,11 @@ github-comment というツールを使うと、コマンドが失敗した際�
 
 ---
 
-- [disable-checkout-persist-credentials](https://github.com/suzuki-shunsuke/disable-checkout-persist-credentials)
-- [ghatm](https://github.com/suzuki-shunsuke/ghatm)
-- [pinact](https://github.com/suzuki-shunsuke/pinact)
+- [tibdex/github-app-token](https://github.com/tibdex/github-app-token)
+- [disable-checkout-persist-credentials](https://github.com/suzuki-shunsuke/disable-checkout-persist-credentials), [ghatm](https://github.com/suzuki-shunsuke/ghatm), [pinact](https://github.com/suzuki-shunsuke/pinact)
 - [ghalint](https://github.com/suzuki-shunsuke/ghalint), [lintnet](https://lintnet.github.io/), [actionlint](https://github.com/rhysd/actionlint)
 - [multi-gitter](https://github.com/lindell/multi-gitter)
+- [dorny/paths-filter](https://github.com/dorny/paths-filter)
 - [autofix.ci](https://autofix.ci)
 - [ghcp](https://github.com/int128/ghcp), [commit-action](https://github.com/suzuki-shunsuke/commit-action)
 - [deny-self-approve](https://github.com/suzuki-shunsuke/deny-self-approve)
