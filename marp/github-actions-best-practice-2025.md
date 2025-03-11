@@ -1,6 +1,7 @@
 ---
 marp: true
 paginate: true
+title: GitHub Actions Best Practice 2025
 ---
 
 # GitHub Actions Best Practice 2025
