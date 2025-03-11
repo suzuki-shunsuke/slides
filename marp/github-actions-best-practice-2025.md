@@ -53,13 +53,13 @@ GitHub Actions に関するブログも書いているので是非御覧くだ�
 
 GitHub Actions, CLI built with Go
 
-- aqua
-- tfcmt
-- tfaction
-- github-comment
-- tfmv
-- pinact
-- ghalint
+- [aqua](https://aquaproj.github.io/)
+- [tfcmt](https://github.com/suzuki-shunsuke/tfcmt)
+- [tfaction](https://github.com/suzuki-shunsuke/tfaction)
+- [github-comment](https://github.com/suzuki-shunsuke/github-comment)
+- [tfmv](https://github.com/suzuki-shunsuke/tfmv)
+- [pinact](https://github.com/suzuki-shunsuke/pinact)
+- [ghalint](https://github.com/suzuki-shunsuke/ghalint)
 - etc
 
 <!--
