@@ -181,6 +181,13 @@ if err := jsonschema.Write(&aqua.Config{}, "json-schema/aqua-yaml.json"); err !=
 }
 ```
 
+<!--
+自分の CLI では設定ファイルに YAML を使うことが多いため、 JSON Schema を提供しています。
+JSON Schema を使うことで設定ファイルのバリデーションができますし、 VSCode などのエディタではリアルタイムのバリデーションや入力補完が可能になります。
+サードパーティのライブラリを使って Go のコードから JSON Schema を自動生成しています。
+また、 JSON Schema の生成及び自動更新を簡単にするための簡単なライブラリも自作しています。
+-->
+
 ---
 
 ![bg left:40% width:500px](https://storage.googleapis.com/zenn-user-upload/54fba6db6fa4-20250709.png)
@@ -188,10 +195,7 @@ if err := jsonschema.Write(&aqua.Config{}, "json-schema/aqua-yaml.json"); err !=
 [aqua.yaml の JSON Schema](https://github.com/aquaproj/aqua/blob/main/json-schema/aqua-yaml.json)
 
 <!--
-自分の CLI では設定ファイルに YAML を使うことが多いため、 JSON Schema を提供しています。
-JSON Schema を使うことで設定ファイルのバリデーションができますし、 VSCode などのエディタではリアルタイムのバリデーションや入力補完が可能になります。
-サードパーティのライブラリを使って Go のコードから JSON Schema を自動生成しています。
-また、 JSON Schema の生成及び自動更新を簡単にするための簡単なライブラリも書いています。
+これは aqua の設定ファイルの JSON Schema ですが、このように JSON Schema を生成してリポジトリにコミットしています。
 -->
 
 ---
@@ -200,6 +204,9 @@ JSON Schema を使うことで設定ファイルのバリデーションがで�
 
 1. JSON Schema を生成する Go のスクリプトを決まったパス [cmd/gen-jsonschema/main.go](https://github.com/aquaproj/aqua/blob/main/cmd/gen-jsonschema/main.go) に作成
 1. [go-autofix-action でスクリプトを実行して自動更新](https://github.com/suzuki-shunsuke/go-autofix-action/blob/7f3fd73b0db1364b95a3f2404ad2fb0985e10465/action.yaml#L53-L58)
+
+<!--
+-->
 
 ---
 
@@ -216,11 +223,24 @@ JSON Schema を使うことで設定ファイルのバリデーションがで�
 
 ---
 
-## Sign Release Artifacts for Security
+## リリース時に署名をしよう！
 
-- Verify signature before installing tools for security
-- [Cosign](https://github.com/sigstore/cosign), [slsa-github-generator](https://github.com/slsa-framework/slsa-github-generator), [GitHub Artifact Attestations](https://docs.github.com/en/actions/how-tos/security-for-github-actions/using-artifact-attestations/using-artifact-attestations-to-establish-provenance-for-builds), etc
-- GitHub Artifact Attestations is very easy to use
+- 今日一番言いたかったこと
+- インストール時に改竄検知をできるように署名をしましょう
+- 署名のツールは [Cosign](https://github.com/sigstore/cosign) や [slsa-github-generator](https://github.com/slsa-framework/slsa-github-generator), [GitHub Artifact Attestations](https://docs.github.com/en/actions/how-tos/security-for-github-actions/using-artifact-attestations/using-artifact-attestations-to-establish-provenance-for-builds) など色々
+- GitHub Artifact Attestations が非常に簡単でおすすめ
+
+<!--
+最後に、 Go CLI をリリースする際は署名をしましょう。
+署名をすることでインストール時に署名を検証して改竄を検知することができ、よりセキュアにインストールすることができます。
+署名をするには Cosign や slsa-github-generator など色々ありますが、まずは GitHub Artifact Attestations が簡単なのでおすすめです。
+-->
+
+---
+
+## GitHub Artifact Attestations
+
+署名:
 
 ```yaml
 permissions:
@@ -235,15 +255,26 @@ permissions:
     subject-path: 'PATH/TO/ARTIFACT'
 ```
 
+検証:
+
 ```sh
-gh attestation verify PATH/TO/YOUR/BUILD/ARTIFACT-BINARY -R ORGANIZATION_NAME/REPOSITORY_NAME
+gh attestation verify pinact_darwin_arm64.tar.gz \
+  -R suzuki-shunsuke/pinact \
+  --signer-workflow suzuki-shunsuke/go-release-workflow/.github/workflows/release.yaml
 ```
 
 <!--
-最後に、 Go CLI をリリースする際は署名をしましょう。
-署名をすることでインストール時に署名を検証して改竄を検知することができ、よりセキュアにインストールすることができます。
-署名をするには Cosign や slsa-github-generator など色々ありますが、まずは GitHub Artifact Attestations が簡単なのでおすすめです。
-公式の action を実行するだけで署名を生成することができ、署名の検証も GitHub CLI を使って簡単にできます。
-ちなみに aqua は Cosign や SLSA Provenance, GitHub artifact Attestations の検証に対応しているため、セキュアにツールをインストールすることが可能です。
+GitHub Artifact Attestations では公式の action を実行するだけで署名を生成することができ、署名の検証も GitHub CLI を使って簡単にできます。
 -->
 
+---
+
+ユーザー向けにドキュメントも提供
+
+[例: pinact](https://github.com/suzuki-shunsuke/pinact/blob/e49c91685b3d9dcb804ad52b57743f735f0fe3dd/INSTALL.md#verify-downloaded-assets-from-github-releases)
+
+![bg left:50% width:600px](https://storage.googleapis.com/zenn-user-upload/8bc65675d930-20250709.png)
+
+<!--
+ただ署名をしてもユーザーに気づいて使ってもらわないと意味がないのでドキュメントにも記載するようにしています。
+-->
