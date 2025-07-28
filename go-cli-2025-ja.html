@@ -44,6 +44,7 @@ OSS 色々作ってる人</p>
   <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">ktr0731/evans@v0.10.11</span>
   <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">mattn/bsky@v0.0.73</span>
   <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">sivchari/ccowl@v1.0.1</span>
+  <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">RyuyaIshibashi/aws-s3-siggy@v0.2.2</span>
   <span class="hljs-comment"># Go 関連のツールもサポート</span>
   <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">mvdan/gofumpt@v0.8.0</span>
   <span class="hljs-bullet">-</span> <span class="hljs-attr">name:</span> <span class="hljs-string">golangci/golangci-lint@v2.2.1</span>
@@ -111,7 +112,7 @@ yq (https://github.com/mikefarah/yq/) version v4.47.1
 </foreignObject><foreignObject width="1280" height="720" data-marpit-advanced-background="pseudo"><section data-paginate="true" lang="C" data-marpit-pagination="9" style="" data-marpit-pagination-total="17" data-marpit-advanced-background="pseudo" data-marpit-advanced-background-split="left"></section></foreignObject></svg><svg data-marpit-svg="" viewBox="0 0 1280 720"><foreignObject width="1280" height="720"><section id="10" data-paginate="true" lang="C" data-marpit-pagination="10" style="--paginate:true;" data-marpit-pagination-total="17">
 <h2 id="private-repository-%E3%81%A7%E3%81%AF-securefix-action-%E3%81%8C%E4%BE%BF%E5%88%A9">private repository では Securefix Action が便利</h2>
 <ul>
-<li>autofix.ci は Private repository だと金銭面や会社のポリシー的にハードルがある</li>
+<li>autofix.ci は Private repository だと導入ハードルがある</li>
 <li>Securefix Action が便利</li>
 <li><a href="https://zenn.dev/shunsuke_suzuki/articles/securefix-action">参考: GitHub Actions でセキュアにコードを修正する</a></li>
 </ul>
@@ -195,7 +196,7 @@ yq (https://github.com/mikefarah/yq/) version v4.47.1
 自分は様々な CLI を開発しているので、多くの CLI で共通して必要になる機能・設定はライブラリとして共通化しています。
 例えば version command や logger の初期化、 shell completion, GitHub access token を secret manager で管理する機能などを共通化し、簡単に実装できるようにしています。
 OSS ではありますが、自分用という感じに割り切って作っています。</p></div><div class="bespoke-marp-note" data-index="7" tabindex="0"><p>CI に関しても GitHub Actions の reusable workflow や action を使って共通化し、簡単に実装できるようにしています。</p></div><div class="bespoke-marp-note" data-index="8" tabindex="0"><p>autofix.ci を使うと fork からの PR であっても CI でセキュアにコードを修正できます。
-自分の場合 gofumpt で自動フォーマットしたり、 go mod tidy で go.mod や go.sum を自動更新したり JSON Schema を自動生成したりしています。</p></div><div class="bespoke-marp-note" data-index="9" tabindex="0"><p>autofix.ci は Private repository だと金銭面や会社のポリシー的に多少ハードルがあると思います。
+自分の場合 gofumpt で自動フォーマットしたり、 go mod tidy で go.mod や go.sum を自動更新したり JSON Schema を自動生成したりしています。</p></div><div class="bespoke-marp-note" data-index="9" tabindex="0"><p>autofix.ci は Private repository だと金銭面や会社のポリシー的に多少導入ハードルがあると思います。
 Securefix Action という自分が開発する OSS を使うと Private Repository でも autofix.ci 同様セキュアにコードを修正できます。</p></div><div class="bespoke-marp-note" data-index="10" tabindex="0"><p>自分の CLI では設定ファイルに YAML を使うことが多いため、 JSON Schema を提供しています。
 JSON Schema を使うことで設定ファイルのバリデーションができますし、 VSCode などのエディタではリアルタイムのバリデーションや入力補完が可能になります。
 サードパーティのライブラリを使って Go のコードから JSON Schema を生成しています。
