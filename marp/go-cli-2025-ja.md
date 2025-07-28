@@ -18,8 +18,8 @@ Shunsuke Suzuki
 ![bg left:40% width:400px](https://github.com/suzuki-shunsuke.png)
 
 Shunsuke Suzuki
-GitHub: suzuki-shunsuke
-X: szkdash
+GitHub: [suzuki-shunsuke](https://github.com/suzuki-shunsuke)
+X: [szkdash](https://x.com/szkdash)
 OSS 色々作ってる人
 
 <!--
