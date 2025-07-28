@@ -59,6 +59,7 @@ packages:
   - name: ktr0731/evans@v0.10.11
   - name: mattn/bsky@v0.0.73
   - name: sivchari/ccowl@v1.0.1
+  - name: RyuyaIshibashi/aws-s3-siggy@v0.2.2
   # Go 関連のツールもサポート
   - name: mvdan/gofumpt@v0.8.0
   - name: golangci/golangci-lint@v2.2.1
@@ -174,12 +175,12 @@ autofix.ci を使うと fork からの PR であっても CI でセキュアに�
 
 ## private repository では Securefix Action が便利
 
-- autofix.ci は Private repository だと金銭面や会社のポリシー的にハードルがある
+- autofix.ci は Private repository だと導入ハードルがある
 - Securefix Action が便利
 - [参考: GitHub Actions でセキュアにコードを修正する](https://zenn.dev/shunsuke_suzuki/articles/securefix-action)
 
 <!--
-autofix.ci は Private repository だと金銭面や会社のポリシー的に多少ハードルがあると思います。
+autofix.ci は Private repository だと金銭面や会社のポリシー的に多少導入ハードルがあると思います。
 Securefix Action という自分が開発する OSS を使うと Private Repository でも autofix.ci 同様セキュアにコードを修正できます。
 -->
 
