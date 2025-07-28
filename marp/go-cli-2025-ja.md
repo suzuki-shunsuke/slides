@@ -58,7 +58,7 @@ packages:
   - name: fujiwara/lambroll@v1.3.0
   - name: ktr0731/evans@v0.10.11
   - name: mattn/bsky@v0.0.73
-  - name: suzuki-shunsuke/pinact@v3.3.0
+  - name: sivchari/ccowl@v1.0.1
   # Go 関連のツールもサポート
   - name: mvdan/gofumpt@v0.8.0
   - name: golangci/golangci-lint@v2.2.1
@@ -84,26 +84,21 @@ CLI Version Manager の aqua を使うと CLI とそのバージョンを YAML �
 
 <!--
 本日はこれまで自分が様々なツールを Go で開発する中で培ってきたノウハウを共有したいと思います。
+
+様々な Go CLI のメンテするためのテクニック
+
+- コードの共通化
+  - 共有ライブラリの開発
+  - GitHub Actions の action, reusable workflow の開発
+- autofix.ci による自動修正
+- CLI の設定ファイルの JSON Schema の自動生成
+- Go や Go Module のライセンスの同梱
+- リリース時の署名
 -->
 
 ---
 
-## 自分がよく使う Go ライブラリ
-
-- [urfave/cli/v3](https://github.com/urfave/cli): CLI framework (Org のメンバーだったりする)
-- [google/wire](https://github.com/google/wire): Dependency Injection のライブラリ
-- [google/go-cmp](https://github.com/google/go-cmp): test で値を比較して分かりやすく diff を出力するライブラリ
-- [sirupsen/logrus](https://github.com/sirupsen/logrus): Logging library (maintenance mode)
-
-<!--
-自分が Go で CLI を開発する際によく使うライブラリとしては
-urfave/cli (ユー・アー・フェイヴ), google/wire, google/go-cmp, logrus などがあります。
-今日これらについて説明する時間はないので、興味のある方は調べてみてください。
--->
-
----
-
-## 様々な CLI で共通する機能を簡単に実装する自作の Go ライブラリ
+## よく実装する機能をライブラリで共通化
 
 [urfave-cli-v3-util](https://github.com/suzuki-shunsuke/urfave-cli-v3-util)
 
