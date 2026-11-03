@@ -10,7 +10,7 @@ on:
 jobs:
   deploy:
     timeout-minutes: 30
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-26.04
     permissions:
       contents: write # To push to the gh-pages branch
     steps:
