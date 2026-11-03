@@ -233,7 +233,7 @@ actions/checkout の persist-credentials を false にしましょう。
 
 If true, the auth token is persisted in the local git config
 😱 Any subsequent steps can access the token
-😱 persisit-credentials is true by default ([issue](https://github.com/actions/checkout/issues/485))
+😱 persist-credentials is true by default ([issue](https://github.com/actions/checkout/issues/485))
 
 <!--
 persist-credentials が true だとリポジトリの checkout に使われる access token や SSH key が Git の設定に永続化されます。
@@ -268,7 +268,7 @@ disable-checkout-persist-credentials というツールを使うと workflow の
 - Push Only: Use GitHub API instead of Git
 
 <!--
-persit-credentials を false にした状態で `git pull` や push をしたい場合、 `gh auth setup-git` を使う方法と、 GitHub API を使う方法の 2 つ方法があります。
+persist-credentials を false にした状態で `git pull` や push をしたい場合、 `gh auth setup-git` を使う方法と、 GitHub API を使う方法の 2 つ方法があります。
 -->
 
 ---
@@ -790,7 +790,7 @@ pull_request_target を使うとできるようになりますが、悪意のあ
 - GitHub App and action to fix pull requests automatically
 - You can fix PRs from fork repositories securely
 - Easy to use. You only need to fix codes and run action
-- Commites are verified
+- Commits are verified
 
 <!--
 そこで autofix.ci という GitHub App 及び Action を使うとこの問題を解決できます。
